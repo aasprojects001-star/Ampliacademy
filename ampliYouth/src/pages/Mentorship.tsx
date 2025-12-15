@@ -1,24 +1,25 @@
+import Section from "../components/Section";
+
 export default function Mentorship() {
   return (
-    <div className="p-10 max-w-4xl mx-auto space-y-8">
-      <h1 className="text-4xl font-bold text-primary">
+    <Section>
+      <h1 className="text-3xl font-bold text-primary mb-4">
         Mentorship Hub
       </h1>
 
-      <p className="text-lg">
-        Our Mentorship Hub connects emerging changemakers with experienced
-        leaders, advocates, and professionals who guide them through
-        leadership, advocacy, and personal development.
+      <p className="mb-6">
+        Our mentorship program pairs emerging leaders with experienced
+        advocates and professionals for growth and impact.
       </p>
 
-      <div className="flex gap-4">
-        <button className="bg-primary text-white px-6 py-3 rounded-pill">
+      <div className="flex flex-col sm:flex-row gap-4">
+        <button className="bg-primary text-white px-6 py-4 rounded-pill">
           Apply as Mentee
         </button>
-        <button className="border border-primary px-6 py-3 rounded-pill">
+        <button className="border border-primary px-6 py-4 rounded-pill">
           Become a Mentor
         </button>
       </div>
-    </div>
+    </Section>
   );
 }

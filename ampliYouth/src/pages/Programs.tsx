@@ -1,42 +1,44 @@
+import Section from "../components/Section";
+import Card from "../components/Card";
+
 export default function Programs() {
+  const programs = [
+    {
+      title: "Mentorship Hub",
+      desc:
+        "One-on-one and group mentorship connecting youth with experienced changemakers."
+    },
+    {
+      title: "Innovation Lab",
+      desc:
+        "Designing human-centered solutions to real community challenges."
+    },
+    {
+      title: "Integrity Music Project",
+      desc:
+        "Using creative expression and music for advocacy and social change."
+    },
+    {
+      title: "Campus Network",
+      desc:
+        "Building advocacy pipelines across universities and colleges."
+    }
+  ];
+
   return (
-    <div className="p-10 max-w-6xl mx-auto space-y-10">
-      <h1 className="text-4xl font-bold text-primary">
+    <Section>
+      <h1 className="text-3xl font-bold text-primary mb-6">
         Programs & Initiatives
       </h1>
 
-      {[
-        {
-          title: "Mentorship Hub",
-          desc:
-            "Structured mentor–mentee relationships that guide young changemakers through growth, clarity, and impact."
-        },
-        {
-          title: "Innovation Lab",
-          desc:
-            "A space for designing and testing community-centered solutions to real social problems."
-        },
-        {
-          title: "Integrity Music Project",
-          desc:
-            "Harnessing creative expression and music as a tool for advocacy, integrity, and social messaging."
-        },
-        {
-          title: "Campus Network",
-          desc:
-            "Building leadership pipelines across universities and colleges through campus-based advocacy hubs."
-        }
-      ].map((p) => (
-        <div
-          key={p.title}
-          className="bg-white rounded-xl shadow-xl p-8"
-        >
-          <h3 className="text-2xl font-bold text-secondary mb-3">
-            {p.title}
-          </h3>
-          <p>{p.desc}</p>
-        </div>
-      ))}
-    </div>
+      <div className="grid sm:grid-cols-2 gap-6">
+        {programs.map(p => (
+          <Card key={p.title}>
+            <h3 className="font-bold text-xl mb-2">{p.title}</h3>
+            <p>{p.desc}</p>
+          </Card>
+        ))}
+      </div>
+    </Section>
   );
 }

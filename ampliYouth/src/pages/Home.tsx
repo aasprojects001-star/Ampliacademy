@@ -1,78 +1,105 @@
+import Section from "../components/Section";
+import Card from "../components/Card";
 import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="space-y-20">
-      {/* Hero */}
-      <section className="px-8 py-24">
+    <>
+      {/* HERO */}
+      <section className="px-5 py-24 bg-gradient-to-br from-primary to-secondary text-white">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl bg-gradient-to-br from-primary to-secondary text-white p-16 shadow-2xl"
+          className="max-w-3xl mx-auto text-center space-y-6"
         >
-          <h1 className="text-5xl font-bold mb-6">
+          <h1 className="text-4xl sm:text-5xl font-bold leading-tight">
             Educate. Empower. Amplify.
           </h1>
-          <p className="text-xl max-w-2xl mb-10">
-            AmpliYouth Advocacy Academy is grooming a new wave of
-            integrity-driven changemakers from underserved communities
-            across Africa and beyond.
+          <p className="text-lg">
+            Grooming a new wave of youth changemakers from underserved
+            communities across Africa and beyond.
           </p>
-
-          <div className="flex flex-wrap gap-4">
-            <button className="bg-white text-primary px-8 py-4 rounded-pill font-semibold">
-              Apply to the Academy
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-white text-primary px-6 py-4 rounded-pill font-semibold">
+              Apply Now
             </button>
-            <button className="border border-white px-8 py-4 rounded-pill">
+            <button className="border border-white px-6 py-4 rounded-pill">
               Become a Mentor
             </button>
           </div>
         </motion.div>
       </section>
 
-      {/* Pillars */}
-      <section className="px-8 grid md:grid-cols-3 gap-8">
-        {[
-          {
-            title: "Educate",
-            text:
-              "Deep learning in advocacy, leadership, civic engagement, and social innovation rooted in real community challenges."
-          },
-          {
-            title: "Empower",
-            text:
-              "Hands-on skills, mentorship, and access to resources that turn passion into structured impact."
-          },
-          {
-            title: "Amplify",
-            text:
-              "Platforms, visibility, and networks that elevate unheard voices and grassroots solutions."
-          }
-        ].map((p) => (
-          <div
-            key={p.title}
-            className="bg-white rounded-xl shadow-xl p-8"
-          >
-            <h3 className="text-2xl font-bold text-primary mb-4">
-              {p.title}
-            </h3>
-            <p>{p.text}</p>
-          </div>
-        ))}
-      </section>
+      {/* STATS */}
+      <Section>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          {[
+            ["5,000+", "Youth Reached"],
+            ["20+", "Communities"],
+            ["100+", "Projects Launched"],
+            ["15+", "Countries"]
+          ].map(([num, label]) => (
+            <Card key={label}>
+              <p className="text-3xl font-bold text-primary">{num}</p>
+              <p className="text-sm">{label}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
 
-      {/* Why */}
-      <section className="px-8 text-center max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-primary mb-6">
-          Why AmpliYouth Matters
+      {/* PILLARS */}
+      <Section>
+        <div className="grid sm:grid-cols-3 gap-6">
+          <Card>
+            <h3 className="text-xl font-bold text-primary mb-2">Educate</h3>
+            <p>
+              Advocacy, leadership, civic engagement, storytelling, SDGs,
+              and human-centered problem solving.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-xl font-bold text-primary mb-2">Empower</h3>
+            <p>
+              Mentorship, skills training, resources, funding access,
+              and leadership confidence.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-xl font-bold text-primary mb-2">Amplify</h3>
+            <p>
+              Platforms, visibility, alumni spotlights, and global
+              advocacy opportunities.
+            </p>
+          </Card>
+        </div>
+      </Section>
+
+      {/* TESTIMONIALS */}
+      <Section>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Voices From the Community
         </h2>
-        <p className="text-lg">
-          Africa’s changemakers do not only live in big cities. They are
-          in villages, inner cities, borderlands, and forgotten spaces.
-          AmpliYouth exists to level the playing field and bring those
-          voices to the center of global conversations.
-        </p>
-      </section>
-    </div>
+        <div className="grid sm:grid-cols-2 gap-6">
+          <Card>
+            <p>
+              “AmpliYouth gave me clarity, confidence, and the network I
+              never had.”
+            </p>
+            <p className="mt-3 font-semibold text-primary">
+              — Amina, Northern Nigeria
+            </p>
+          </Card>
+          <Card>
+            <p>
+              “This academy helped me turn passion into structured
+              advocacy.”
+            </p>
+            <p className="mt-3 font-semibold text-primary">
+              — Joseph, Kenya
+            </p>
+          </Card>
+        </div>
+      </Section>
+    </>
   );
 }

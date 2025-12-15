@@ -1,18 +1,14 @@
+import Section from "../components/Section";
+
 export default function Contact() {
   return (
-    <div className="p-10 max-w-4xl mx-auto space-y-6">
-      <h1 className="text-4xl font-bold text-primary">
+    <Section>
+      <h1 className="text-3xl font-bold text-primary mb-4">
         Contact Us
       </h1>
 
-      <p>
-        Reach out for partnerships, inquiries, or collaboration
-        opportunities.
-      </p>
-
-      <p className="font-semibold">
-        Email: info@ampliyouth.org
-      </p>
-    </div>
+      <p>Email: info@ampliyouth.org</p>
+      <p>Instagram • Twitter • LinkedIn</p>
+    </Section>
   );
 }
