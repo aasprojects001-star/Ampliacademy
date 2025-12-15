@@ -73,33 +73,24 @@ export default function Home() {
           </Card>
         </div>
       </Section>
-
-      {/* TESTIMONIALS */}
       <Section>
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Voices From the Community
-        </h2>
-        <div className="grid sm:grid-cols-2 gap-6">
-          <Card>
-            <p>
-              “AmpliYouth gave me clarity, confidence, and the network I
-              never had.”
-            </p>
-            <p className="mt-3 font-semibold text-primary">
-              — Amina, Northern Nigeria
-            </p>
-          </Card>
-          <Card>
-            <p>
-              “This academy helped me turn passion into structured
-              advocacy.”
-            </p>
-            <p className="mt-3 font-semibold text-primary">
-              — Joseph, Kenya
-            </p>
-          </Card>
-        </div>
-      </Section>
+  <h2 className="text-2xl font-bold mb-6 text-center">
+    Voices From the Community
+  </h2>
+  <div className="grid sm:grid-cols-2 gap-6">
+    <Card>
+      <p>
+        “AmpliYouth gave me clarity, confidence, and the network I
+        never had.”
+      </p>
+      <p className="mt-3 font-semibold text-primary">— Amina, Northern Nigeria</p>
+    </Card>
+    <Card>
+      <p>“This academy helped me turn passion into structured advocacy.”</p>
+      <p className="mt-3 font-semibold text-primary">— Joseph, Kenya</p>
+    </Card>
+  </div>
+</Section>
     </>
   );
 }

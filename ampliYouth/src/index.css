@@ -3,5 +3,69 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white text-gray-900;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom right, #6A0DAD, #FF7A00);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* Adjust the body padding */
+section {
+  padding: 3rem 0;
+}
+
+.bg-primary {
+  background-color: #6A0DAD;
+}
+
+.bg-secondary {
+  background-color: #FF7A00;
+}
+
+/* Add some smooth transitions to links and buttons */
+a, button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a:hover, button:hover {
+  transform: translateY(-3px);
+  background-color: #ffbc5a;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Tailwind defaults: Set color and background */
+.bg-gradient {
+  background: linear-gradient(to bottom right, #6A0DAD, #FF7A00);
+}
+
+/* Make sure sections are responsive */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }

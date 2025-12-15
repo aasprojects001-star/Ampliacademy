@@ -1,27 +1,61 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+
   return (
-    <motion.nav
-      initial={{ y: -40 }}
-      animate={{ y: 0 }}
-      className="sticky top-0 z-50 bg-white shadow-lg rounded-b-xl px-6 py-4 flex justify-between items-center"
-    >
-      <h1 className="font-bold text-primary text-xl">AmpliYouth</h1>
-      <div className="flex gap-4">
-        {["/", "/about", "/programs", "/mentorship", "/get-involved"].map(
-          (path, i) => (
+    <header className="w-full bg-primary text-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold">AmpliYouth</h1>
+        
+        {/* Desktop Navigation */}
+        <nav className="hidden sm:flex space-x-6">
+          {["Home", "About", "Programs", "Mentorship", "Contact"].map((page) => (
             <Link
-              key={i}
-              to={path}
-              className="px-4 py-2 rounded-pill bg-gradient-to-r from-primary to-secondary text-white"
+              key={page}
+              to={`/${page.toLowerCase()}`}
+              className="hover:text-secondary transition-colors"
             >
-              {path === "/" ? "Home" : path.replace("/", "")}
+              {page}
             </Link>
-          )
-        )}
+          ))}
+        </nav>
+
+        {/* Hamburger Menu for Mobile */}
+        <div className="sm:hidden">
+          <button onClick={handleMenuToggle} className="text-2xl">
+            {isMenuOpen ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
-    </motion.nav>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="sm:hidden bg-primary py-4 px-5"
+        >
+          <nav className="space-y-4">
+            {["Home", "About", "Programs", "Mentorship", "Contact"].map((page) => (
+              <Link
+                key={page}
+                to={`/${page.toLowerCase()}`}
+                className="block text-lg text-white hover:text-secondary"
+                onClick={handleMenuToggle}
+              >
+                {page}
+              </Link>
+            ))}
+          </nav>
+        </motion.div>
+      )}
+    </header>
   );
 }
