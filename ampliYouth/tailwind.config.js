@@ -1,4 +1,3 @@
-cat << 'EOF' > tailwind.config.js
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
@@ -15,4 +14,3 @@ export default {
   },
   plugins: []
 };
-EOF
