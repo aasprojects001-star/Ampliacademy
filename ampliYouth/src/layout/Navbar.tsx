@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -8,46 +9,47 @@ export default function Navbar() {
     { name: "About", path: "/about" },
     { name: "Programs", path: "/programs" },
     { name: "Mentorship", path: "/mentorship" },
-    { name: "Get Involved", path: "/get-involved" }
+    { name: "Media", path: "/media" },
+    { name: "Events", path: "/events" },
+    { name: "Network", path: "/network" },
+    { name: "Resources", path: "/resources" },
+    { name: "Get Involved", path: "/get-involved" },
+    { name: "Contact", path: "/contact" }
   ];
 
   return (
-    <header className="bg-white border-b">
+    <header className="bg-white dark:bg-slate-900 border-b dark:border-slate-700">
       <div className="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
-        <Link to="/" className="font-bold text-xl text-primary">
+        <Link to="/" className="text-xl font-bold text-primary">
           AmpliYouth
         </Link>
 
         {/* Desktop */}
-        <nav className="hidden md:flex gap-8 items-center">
+        <nav className="hidden lg:flex gap-6 items-center">
           {links.map(l => (
             <Link
-              key={l.name}
+              key={l.path}
               to={l.path}
-              className="text-sm font-medium hover:text-primary"
+              className="text-sm hover:text-primary"
             >
               {l.name}
             </Link>
           ))}
-          <button className="bg-primary text-white px-5 py-2 rounded-full">
-            Apply
-          </button>
+          <ThemeToggle />
         </nav>
 
         {/* Mobile */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-2xl"
-        >
-          ☰
-        </button>
+        <div className="lg:hidden flex items-center gap-4">
+          <ThemeToggle />
+          <button onClick={() => setOpen(!open)}>☰</button>
+        </div>
       </div>
 
       {open && (
-        <div className="md:hidden bg-white border-t px-5 py-6 space-y-4">
+        <div className="lg:hidden bg-white dark:bg-slate-900 px-5 py-6 space-y-4">
           {links.map(l => (
             <Link
-              key={l.name}
+              key={l.path}
               to={l.path}
               onClick={() => setOpen(false)}
               className="block text-lg"
@@ -55,9 +57,6 @@ export default function Navbar() {
               {l.name}
             </Link>
           ))}
-          <button className="w-full bg-primary text-white py-3 rounded-full">
-            Apply
-          </button>
         </div>
       )}
     </header>
