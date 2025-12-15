@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "../components/ThemeToggle";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
