@@ -2,23 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #f9fafb;
-  color: #0f172a;
+html,
+body,
+#root {
+  height: 100%;
 }
 
-img {
-  width: 100%;
-  height: auto;
-  display: block;
+body {
+  @apply bg-lightBg text-lightText dark:bg-darkBg dark:text-darkText;
 }
 
 .section {
-  padding: 4rem 1.25rem;
+  @apply py-20 px-6;
 }
 
-@media (min-width: 768px) {
-  .section {
-    padding: 6rem 2rem;
-  }
+.section.bg-white {
+  @apply bg-lightBg dark:bg-darkBg;
+}
+
+.bg-muted {
+  @apply bg-mutedLight dark:bg-mutedDark;
 }

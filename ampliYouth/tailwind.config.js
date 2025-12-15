@@ -4,10 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#5B2D8B",     // restrained purple (accent only)
-        secondary: "#F47A1F",   // CTA accent
-        dark: "#0F172A",        // body text
-        muted: "#F8FAFC"        // page background
+        primary: "#5B2D8B",
+        secondary: "#F47A1F",
+        lightBg: "#F8FAFC",
+        darkBg: "#0B1120",
+        lightText: "#0F172A",
+        darkText: "#E5E7EB",
+        mutedLight: "#E5E7EB",
+        mutedDark: "#1E293B"
       }
     }
   },
