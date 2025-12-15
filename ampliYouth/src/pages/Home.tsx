@@ -1,96 +1,74 @@
 import Section from "../components/Section";
-import Card from "../components/Card";
-import { motion } from "framer-motion";
 
 export default function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="px-5 py-24 bg-gradient-to-br from-primary to-secondary text-white">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl mx-auto text-center space-y-6"
-        >
-          <h1 className="text-4xl sm:text-5xl font-bold leading-tight">
-            Educate. Empower. Amplify.
-          </h1>
-          <p className="text-lg">
-            Grooming a new wave of youth changemakers from underserved
-            communities across Africa and beyond.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-primary px-6 py-4 rounded-pill font-semibold">
-              Apply Now
-            </button>
-            <button className="border border-white px-6 py-4 rounded-pill">
-              Become a Mentor
-            </button>
+      <section className="bg-white">
+        <div className="max-w-7xl mx-auto px-5 py-20 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold text-dark mb-6">
+              Educating and amplifying Africa’s next generation of changemakers
+            </h1>
+            <p className="text-lg mb-8 text-gray-600">
+              AmpliYouth Advocacy Academy equips young leaders from underserved
+              communities with the skills, networks, and platforms to drive
+              justice, equity, and sustainable development.
+            </p>
+            <div className="flex gap-4">
+              <button className="bg-primary text-white px-6 py-3 rounded-full">
+                Apply to the Academy
+              </button>
+              <button className="border px-6 py-3 rounded-full">
+                Become a Partner
+              </button>
+            </div>
           </div>
-        </motion.div>
+
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+            alt="Youth leadership"
+            className="rounded-2xl shadow-lg"
+          />
+        </div>
       </section>
 
-      {/* STATS */}
+      {/* IMPACT */}
       <Section>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             ["5,000+", "Youth Reached"],
             ["20+", "Communities"],
-            ["100+", "Projects Launched"],
-            ["15+", "Countries"]
-          ].map(([num, label]) => (
-            <Card key={label}>
-              <p className="text-3xl font-bold text-primary">{num}</p>
-              <p className="text-sm">{label}</p>
-            </Card>
+            ["15+", "Countries"],
+            ["100+", "Projects"]
+          ].map(([n, t]) => (
+            <div key={t}>
+              <p className="text-3xl font-bold text-primary">{n}</p>
+              <p className="text-sm text-gray-600">{t}</p>
+            </div>
           ))}
         </div>
       </Section>
 
-      {/* PILLARS */}
+      {/* WHY */}
       <Section>
-        <div className="grid sm:grid-cols-3 gap-6">
-          <Card>
-            <h3 className="text-xl font-bold text-primary mb-2">Educate</h3>
-            <p>
-              Advocacy, leadership, civic engagement, storytelling, SDGs,
-              and human-centered problem solving.
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <img
+            src="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
+            className="rounded-2xl"
+          />
+          <div>
+            <h2 className="text-3xl font-bold mb-4">
+              Why AmpliYouth Matters
+            </h2>
+            <p className="text-gray-600">
+              Africa’s most powerful changemakers often live far from
+              opportunity. We exist to bridge that gap — connecting talent,
+              integrity, and grassroots passion to global platforms.
             </p>
-          </Card>
-          <Card>
-            <h3 className="text-xl font-bold text-primary mb-2">Empower</h3>
-            <p>
-              Mentorship, skills training, resources, funding access,
-              and leadership confidence.
-            </p>
-          </Card>
-          <Card>
-            <h3 className="text-xl font-bold text-primary mb-2">Amplify</h3>
-            <p>
-              Platforms, visibility, alumni spotlights, and global
-              advocacy opportunities.
-            </p>
-          </Card>
+          </div>
         </div>
       </Section>
-      <Section>
-  <h2 className="text-2xl font-bold mb-6 text-center">
-    Voices From the Community
-  </h2>
-  <div className="grid sm:grid-cols-2 gap-6">
-    <Card>
-      <p>
-        “AmpliYouth gave me clarity, confidence, and the network I
-        never had.”
-      </p>
-      <p className="mt-3 font-semibold text-primary">— Amina, Northern Nigeria</p>
-    </Card>
-    <Card>
-      <p>“This academy helped me turn passion into structured advocacy.”</p>
-      <p className="mt-3 font-semibold text-primary">— Joseph, Kenya</p>
-    </Card>
-  </div>
-</Section>
     </>
   );
 }
