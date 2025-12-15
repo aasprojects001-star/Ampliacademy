@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from "./layout/Layout";
 
 import Home from "./pages/Home";
@@ -14,21 +14,19 @@ import Contact from "./pages/Contact";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/mentorship" element={<Mentorship />} />
-          <Route path="/get-involved" element={<GetInvolved />} />
-          <Route path="/media" element={<Media />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/network" element={<Network />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/programs" element={<Programs />} />
+        <Route path="/mentorship" element={<Mentorship />} />
+        <Route path="/get-involved" element={<GetInvolved />} />
+        <Route path="/media" element={<Media />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/network" element={<Network />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Layout>
   );
 }
