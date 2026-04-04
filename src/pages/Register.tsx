@@ -145,5 +145,4 @@ export default function Register() {
       </div>
     </div>
   )
-}}}}}}}, hbn
-hkn { impooty }
+}
