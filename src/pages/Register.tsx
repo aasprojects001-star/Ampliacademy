@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext'
 import { getDomain } from '../lib/domain'
 
 export default function Register() {
-  const [form, setForm] = useState({ name:'', email:'', password:'', confirm:'', intent:'academy' })
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '', intent: 'academy' })
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
   const [done, setDone] = useState(false)
@@ -17,10 +17,10 @@ export default function Register() {
   const accentLabel = isYSDI ? 'text-ysdi-light' : 'text-primary-400'
 
   const intents = [
-    { value:'academy', label:'Join the Academy', icon:'🎓' },
-    { value:'ambassador', label:'Campus Ambassador', icon:'🌍' },
-    { value:'mentor', label:'Become a Mentor', icon:'🤝' },
-    { value:'partner', label:'Partner / Organisation', icon:'🏢' },
+    { value: 'academy',    label: 'Join the Academy',         icon: '🎓' },
+    { value: 'ambassador', label: 'Campus Ambassador',        icon: '🌍' },
+    { value: 'mentor',     label: 'Become a Mentor',          icon: '🤝' },
+    { value: 'partner',    label: 'Partner / Organisation',   icon: '🏢' },
   ]
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,9 +28,10 @@ export default function Register() {
     if (form.password !== form.confirm) { toast.error('Passwords do not match'); return }
     if (form.password.length < 8) { toast.error('Password must be at least 8 characters'); return }
     setLoading(true)
-    const { error } = await signUp(form.email, form.password, form.name)
+    // Pass intent so signUp can set the right role
+    const { error } = await signUp(form.email, form.password, form.name, form.intent)
     if (error) {
-      toast.error(error.message || 'Registration failed.')
+      toast.error(error.message || 'Registration failed. Please try again.')
     } else {
       setDone(true)
     }
@@ -43,7 +44,9 @@ export default function Register() {
         <CheckCircle size={56} className={`mx-auto mb-6 ${accentLabel}`} />
         <h2 className="text-2xl font-bold mb-4">Account Created!</h2>
         <p className="text-white/55 text-sm mb-8">
-          Please check your email to verify your account. Once verified, your application will be reviewed by our team.
+          {form.intent === 'ambassador'
+            ? 'Your campus ambassador application has been submitted. Admin will review and approve your access.'
+            : 'Please check your email to verify your account, then you can sign in.'}
         </p>
         <Link to="/login" className={isYSDI ? 'btn-ysdi' : 'btn-primary'}>Go to Login</Link>
       </div>
@@ -67,8 +70,8 @@ export default function Register() {
             }`}>
               {isYSDI ? 'Y' : 'A'}
             </div>
-            <h1 className="text-2xl font-bold mb-1">Join AmpliYouth</h1>
-            <p className="text-white/40 text-sm">Create your account to get started</p>
+            <h1 className="text-2xl font-bold mb-1">Create Your Account</h1>
+            <p className="text-white/40 text-sm">Join the {isYSDI ? 'YSDI' : 'AmpliYouth'} community</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -80,10 +83,12 @@ export default function Register() {
                   <button
                     key={i.value}
                     type="button"
-                    onClick={() => setForm({...form, intent: i.value})}
+                    onClick={() => setForm({ ...form, intent: i.value })}
                     className={`p-3 rounded-xl text-sm flex items-center gap-2 transition-all border ${
                       form.intent === i.value
-                        ? isYSDI ? 'border-ysdi/50 bg-ysdi/10 text-ysdi-light' : 'border-primary/50 bg-primary/10 text-primary-400'
+                        ? isYSDI
+                          ? 'border-ysdi/50 bg-ysdi/10 text-ysdi-light'
+                          : 'border-primary/50 bg-primary/10 text-primary-400'
                         : 'border-white/5 glass text-white/50 hover:border-white/15'
                     }`}
                   >
@@ -96,17 +101,39 @@ export default function Register() {
 
             <div>
               <label className="label">Full Name</label>
-              <input className="input-glass" placeholder="Ayotunde Aboderin" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
+              <input
+                className="input-glass w-full"
+                placeholder="Your full name"
+                value={form.name}
+                onChange={e => setForm({ ...form, name: e.target.value })}
+                required
+              />
             </div>
+
             <div>
               <label className="label">Email Address</label>
-              <input type="email" className="input-glass" placeholder="you@email.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required />
+              <input
+                type="email"
+                className="input-glass w-full"
+                placeholder="you@email.com"
+                value={form.email}
+                onChange={e => setForm({ ...form, email: e.target.value })}
+                required
+              />
             </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="label">Password</label>
                 <div className="relative">
-                  <input type={show ? 'text' : 'password'} className="input-glass pr-11" placeholder="Min. 8 chars" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required />
+                  <input
+                    type={show ? 'text' : 'password'}
+                    className="input-glass w-full pr-11"
+                    placeholder="Min. 8 chars"
+                    value={form.password}
+                    onChange={e => setForm({ ...form, password: e.target.value })}
+                    required
+                  />
                   <button type="button" onClick={() => setShow(!show)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30">
                     {show ? <EyeOff size={15} /> : <Eye size={15} />}
                   </button>
@@ -114,25 +141,33 @@ export default function Register() {
               </div>
               <div>
                 <label className="label">Confirm Password</label>
-                <input type="password" className="input-glass" placeholder="Repeat password" value={form.confirm} onChange={e => setForm({...form, confirm: e.target.value})} required />
+                <input
+                  type="password"
+                  className="input-glass w-full"
+                  placeholder="Repeat password"
+                  value={form.confirm}
+                  onChange={e => setForm({ ...form, confirm: e.target.value })}
+                  required
+                />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm ${
+              className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all ${
                 isYSDI ? 'btn-ysdi' : 'btn-primary'
               } ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
-              {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <UserPlus size={16} />}
+              {loading
+                ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                : <UserPlus size={16} />}
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>
 
             <p className="text-center text-xs text-white/30">
               By registering you agree to our{' '}
-              <Link to="/terms" className={accentLabel}>Terms of Use</Link>
-              {' '}and{' '}
+              <Link to="/terms" className={accentLabel}>Terms</Link> and{' '}
               <Link to="/privacy" className={accentLabel}>Privacy Policy</Link>
             </p>
           </form>

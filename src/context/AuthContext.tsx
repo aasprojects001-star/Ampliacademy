@@ -20,7 +20,7 @@ interface AuthContextType {
   profile: Profile | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<{ error: any }>
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>
+  signUp: (email: string, password: string, fullName: string, intent?: string) => Promise<{ error: any }>
   signOut: () => Promise<void>
   refreshProfile: () => Promise<void>
   hasPermission: (perm: string) => boolean
@@ -33,19 +33,27 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+function intentToRole(intent: string): string {
+  if (intent === 'ambassador') return 'campus_ambassador'
+  if (intent === 'mentor')     return 'mentor'
+  return 'user'
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser]       = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
 
   const fetchProfile = async (userId: string) => {
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single()
-    if (data) setProfile(data)
+    try {
+      const { data } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single()
+      if (data) setProfile(data)
+    } catch { /* profile may not exist yet */ }
   }
 
   useEffect(() => {
@@ -75,22 +83,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error }
   }
 
-  const signUp = async (email: string, password: string, fullName: string) => {
+  // KEY FIX: Do NOT insert into profiles manually.
+  // The DB trigger handle_new_user() handles it automatically.
+  // We only update role/name after, if needed.
+  const signUp = async (email: string, password: string, fullName: string, intent = 'academy') => {
+    const role = intentToRole(intent)
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { full_name: fullName } }
     })
-    if (!error && data.user) {
-      await supabase.from('profiles').insert({
-        id: data.user.id,
-        email,
-        full_name: fullName,
-        role: 'user',
-        permissions: [],
-        approved: false,
-      })
+
+    // Trigger fires and creates profile with role='user'.
+    // If they registered as ambassador/mentor, update after trigger settles.
+    if (!error && data.user && role !== 'user') {
+      setTimeout(async () => {
+        await supabase
+          .from('profiles')
+          .update({ role, full_name: fullName })
+          .eq('id', data.user!.id)
+      }, 2000)
     }
+
     return { error }
   }
 
@@ -109,9 +124,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return profile.permissions?.includes(perm) || false
   }
 
-  const isCEO = () => profile?.role === 'ceo'
-  const isAdmin = () => ['ceo', 'admin'].includes(profile?.role || '')
-  const isMentor = () => ['ceo', 'admin', 'mentor'].includes(profile?.role || '')
+  const isCEO        = () => profile?.role === 'ceo'
+  const isAdmin      = () => ['ceo', 'admin'].includes(profile?.role || '')
+  const isMentor     = () => ['ceo', 'admin', 'mentor'].includes(profile?.role || '')
   const isAmbassador = () => profile?.role === 'campus_ambassador'
   const isTeamMember = () => ['ceo', 'admin', 'team_member'].includes(profile?.role || '')
 
