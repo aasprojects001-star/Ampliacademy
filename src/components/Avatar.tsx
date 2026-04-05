@@ -1,43 +1,49 @@
-import React from "react";
+import React from 'react'
 
 interface AvatarProps {
-  name?: string;
-  src?: string;
-  size?: number;
+  name: string
+  size?: number | 'xs' | 'sm' | 'md' | 'lg' // ✅ FIXED HERE
+  online?: boolean
+  rounded?: string
 }
 
-const Avatar: React.FC<AvatarProps> = ({ name = "User", src, size = 40 }) => {
+export default function Avatar({
+  name,
+  size = 'md',
+  online,
+  rounded = 'xl',
+}: AvatarProps) {
+
+  // ✅ map string sizes to numbers
+  const sizeMap: Record<string, number> = {
+    xs: 24,
+    sm: 32,
+    md: 40,
+    lg: 48,
+  }
+
+  const finalSize = typeof size === 'number' ? size : sizeMap[size] || 40
+
   const initials = name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .toUpperCase()
 
   return (
-    <div
-      style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        backgroundColor: "#ccc",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: "bold",
-        overflow: "hidden",
-      }}
-    >
-      {src ? (
-        <img
-          src={src}
-          alt={name}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      ) : (
-        initials
+    <div className="relative flex-shrink-0">
+      <div
+        style={{ width: finalSize, height: finalSize }}
+        className={`bg-gradient-to-br from-primary to-primary-700 flex items-center justify-center text-white font-bold rounded-${rounded}`}
+      >
+        {initials}
+      </div>
+
+      {online !== undefined && (
+        <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-dark-bg ${
+          online ? 'bg-emerald-400' : 'bg-white/20'
+        }`} />
       )}
     </div>
-  );
-};
-
-export default Avatar;
+  )
+}
