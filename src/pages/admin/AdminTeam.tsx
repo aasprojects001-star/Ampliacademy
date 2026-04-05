@@ -132,7 +132,7 @@ export default function AdminTeam() {
 
             <div>
               <label className="label">Position / Title</label>
-              <select className="input-glass" value={form.position} onChange={e => setForm(f=>({...f,position:e.target.value}))} required>
+              <select className="input-glass" style={{background:"#111827",color:"white"}} value={form.position} onChange={e => setForm(f=>({...f,position:e.target.value}))} required>
                 <option value="">Select position...</option>
                 {POSITIONS.map(p => <option key={p} value={p}>{p}</option>)}
               </select>
