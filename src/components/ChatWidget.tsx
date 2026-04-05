@@ -14,10 +14,10 @@ interface Message {
 }
 
 interface ChatWidgetProps {
-  threadId: string        // unique thread key e.g. "dm_userId1_userId2" or "group_ambassadors"
-  toId?: string           // for direct messages
+  threadId: string
+  toId?: string
   placeholder?: string
-  height?: string
+  height?: string | number // <- fixed TS2322 error
   showHeader?: boolean
   recipientName?: string
 }
@@ -41,7 +41,6 @@ export default function ChatWidget({
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Load messages
   const fetchMessages = useCallback(async () => {
     setLoading(true)
     const { data, error } = await supabase
@@ -58,7 +57,6 @@ export default function ChatWidget({
   useEffect(() => {
     fetchMessages()
 
-    // Real-time subscription
     const channel = supabase
       .channel(`chat:${threadId}`)
       .on('postgres_changes', {
@@ -67,7 +65,6 @@ export default function ChatWidget({
         table: 'messages',
         filter: `thread_id=eq.${threadId}`,
       }, async (payload) => {
-        // Fetch the sender profile
         const { data: prof } = await supabase
           .from('profiles')
           .select('full_name, avatar_url')

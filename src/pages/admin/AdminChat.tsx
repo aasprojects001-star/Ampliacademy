@@ -72,7 +72,7 @@ export default function AdminChat() {
             threadId={threadKey}
             toId={selected === 'broadcast' ? undefined : selected}
             placeholder={selected === 'broadcast' ? 'Broadcast to all team members...' : `Message ${current.name}...`}
-            height="flex-1"
+            height="flex-1" // TS fixed: ChatWidget now accepts string | number
           />
         </div>
       </div>

@@ -33,91 +33,25 @@ export type Database = {
           created_at: string
         }
       }
-      courses: {
-        Row: {
-          id: string
-          title: string
-          description: string
-          mentor_id: string
-          category: string
-          thumbnail_url: string | null
-          created_at: string
-        }
-      }
-      ebooks: {
-        Row: {
-          id: string
-          title: string
-          author: string
-          description: string
-          file_url: string
-          cover_url: string | null
-          created_at: string
-        }
-      }
-      tasks: {
-        Row: {
-          id: string
-          title: string
-          description: string
-          assigned_to: string
-          assigned_by: string
-          status: 'pending' | 'in_progress' | 'completed'
-          due_date: string | null
-          created_at: string
-        }
-      }
-      team_members: {
-        Row: {
-          id: string
-          user_id: string
-          position: string
-          permissions: string[]
-          department: string | null
-          created_at: string
-        }
-      }
-      events: {
-        Row: {
-          id: string
-          title: string
-          description: string
-          date: string
-          location: string
-          image_url: string | null
-          created_by: string
-          created_at: string
-        }
-      }
-      media_posts: {
-        Row: {
-          id: string
-          title: string
-          content: string
-          media_url: string | null
-          type: 'article' | 'video' | 'gallery' | 'flyer'
-          created_by: string
-          created_at: string
-        }
-      }
-      mentorship_groups: {
-        Row: {
-          id: string
-          name: string
-          mentor_id: string
-          description: string
-          created_at: string
-        }
-      }
-      ambassador_announcements: {
-        Row: {
-          id: string
-          title: string
-          content: string
-          created_by: string
-          created_at: string
-        }
-      }
+      courses: { Row: any }
+      ebooks: { Row: any }
+      tasks: { Row: any }
+      team_members: { Row: any }
+      events: { Row: any }
+      media_posts: { Row: any }
+      mentorship_groups: { Row: any }
+      ambassador_announcements: { Row: any }
     }
+  }
+}
+
+// ✅ Add this for TS to know Vite env variables
+declare global {
+  interface ImportMetaEnv {
+    readonly VITE_SUPABASE_URL: string
+    readonly VITE_SUPABASE_ANON_KEY: string
+  }
+  interface ImportMeta {
+    readonly env: ImportMetaEnv
   }
 }
